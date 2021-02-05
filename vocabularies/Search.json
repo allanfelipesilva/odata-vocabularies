@@ -1,0 +1,100 @@
+{
+    "$Version": "4.0",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Core.V1",
+                    "$Alias": "Core"
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Validation.V1",
+                    "$Alias": "Validation"
+                }
+            ]
+        },
+        "https://sap.github.io/odata-vocabularies/vocabularies/Common.xml": {
+            "$Include": [
+                {
+                    "$Namespace": "com.sap.vocabularies.Common.v1",
+                    "$Alias": "Common"
+                }
+            ]
+        }
+    },
+    "com.sap.vocabularies.esh.v1": {
+        "$Alias": "Search",
+        "@Core.Description": "Terms for Search",
+        "@Core.Description#Published": "2018-01-31 © Copyright 2018 SAP SE. All rights reserved",
+        "@Core.Links": [
+            {
+                "rel": "alternate",
+                "href": "https://sap.github.io/odata-vocabularies/vocabularies/Search.xml"
+            },
+            {
+                "rel": "latest-version",
+                "href": "https://sap.github.io/odata-vocabularies/vocabularies/Search.json"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://github.com/sap/odata-vocabularies/blob/master/vocabularies/Search.md"
+            }
+        ],
+        "searchable": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@Search.searchable": true,
+            "@Core.Description": "Defines if a CDS view or entity is generally relevant for search scenarios.",
+            "@Core.LongDescription": "The annotation offers a general switch and a means to quickly detect whether a view is relevant or not. Set to true to enable @Search annotations. At least one column has to be defined as defaultSearchElement."
+        },
+        "defaultSearchElement": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@Search.defaultSearchElement": false,
+            "@Core.Description": "Defines a column as full-text search column.",
+            "@Core.LongDescription": "At least one column has to be defined as default full-text search column. Search in views without default full-text search elements is not supported."
+        },
+        "ranking": {
+            "$Kind": "Term",
+            "$Type": "Search.RankingEnumType",
+            "@Core.Description": "Defines the ranking weight for a column"
+        },
+        "RankingEnumType": {
+            "$Kind": "EnumType",
+            "$UnderlyingType": "Edm.Decimal",
+            "HIGH": 1,
+            "HIGH@Core.Description": "The HIGH ranking weights 1.0",
+            "MEDIUM": 0.7,
+            "MEDIUM@Core.Description": "The MEDIUM ranking weights 0.7",
+            "LOW": 0.5,
+            "LOW@Core.Description": "The LOW ranking weights 0.5"
+        },
+        "fuzinessThreshold": {
+            "$Kind": "Term",
+            "$Type": "Edm.Decimal",
+            "@Search.fuzinessThreshold": 1,
+            "@Core.Description": "Defines the threshold for a fuzzy search.",
+            "@Core.LongDescription": "Default value is 1. This means that an exact search is performed."
+        },
+        "termMappingDictionary": {
+            "$Kind": "Term",
+            "@Core.Description": "Defines the name of the term mapping table.",
+            "@Core.LongDescription": "Defines the name of the term mapping table (format: schemaname.tablename). passed to the search option 'termMappingTable' of the CONTAINS() predicate."
+        },
+        "termMappingListID": {
+            "$Kind": "Term",
+            "$Collection": true,
+            "@Core.Description": "Defines the names of the term mapping list IDs.",
+            "@Core.LongDescription": "Defines the names of the term mapping list IDs, passed to the search option 'termMappingListId' of the CONTAINS() predicate."
+        },
+        "fulltextIndex": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@Core.Description": "If set to true, a configuration fails if there is no full-text index defined for the element."
+        }
+    }
+}

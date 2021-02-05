@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1" />
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+    <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1" />
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sap.vocabularies.esh.v1" Alias="Search">
+      <Annotation Term="Core.Description">
+        <String>Terms for Search</String>
+      </Annotation>
+      <Annotation Term="Core.Description" Qualifier="Published">
+        <String>2018-01-31 © Copyright 2018 SAP SE. All rights reserved</String>
+      </Annotation>
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="latest-version" />
+            <PropertyValue Property="href" String="https://sap.github.io/odata-vocabularies/vocabularies/Search.xml" />
+          </Record>
+          <Record>
+            <PropertyValue Property="rel" String="alternate" />
+            <PropertyValue Property="href" String="https://sap.github.io/odata-vocabularies/vocabularies/Search.json" />
+          </Record>
+          <Record>
+            <PropertyValue Property="rel" String="describedby" />
+            <PropertyValue Property="href" String="https://github.com/sap/odata-vocabularies/blob/master/vocabularies/Search.md" />
+          </Record>
+        </Collection>
+      </Annotation>
+      <Term Name="searchable" Type="Edm.Boolean" Nullable="false">
+        <Annotation Term="Search.searchable" Bool="true" />
+        <Annotation Term="Core.Description" String="Defines if a CDS view or entity is generally relevant for search scenarios." />
+        <Annotation Term="Core.LongDescription" String="The annotation offers a general switch and a means to quickly detect whether a view is relevant or not. Set to true to enable @Search annotations. At least one column has to be defined as defaultSearchElement." />
+      </Term>
+      <Term Name="defaultSearchElement" Type="Edm.Boolean" Nullable="false">
+        <Annotation Term="Search.defaultSearchElement" Bool="false" />
+        <Annotation Term="Core.Description" String="Defines a column as full-text search column." />
+        <Annotation Term="Core.LongDescription" String="At least one column has to be defined as default full-text search column. Search in views without default full-text search elements is not supported." />
+      </Term>
+      <Term Name="ranking" Type="Search.RankingEnumType" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines the ranking weight for a column" />
+      </Term>
+        
+      <EnumType Name="RankingEnumType" UnderlyingType="Edm.Decimal">
+        <Member Name="HIGH" Value="1.0">
+          <Annotation Term="Core.Description" String="The HIGH ranking weights 1.0" />
+        </Member>
+        <Member Name="MEDIUM" Value="0.7">
+          <Annotation Term="Core.Description" String="The MEDIUM ranking weights 0.7" />
+        </Member>
+        <Member Name="LOW" Value="0.5">
+          <Annotation Term="Core.Description" String="The LOW ranking weights 0.5" />
+        </Member>
+      </EnumType>
+      <Term Name="fuzinessThreshold" Type="Edm.Decimal" Nullable="false">
+        <Annotation Term="Search.fuzinessThreshold" Decimal="1.0" />
+        <Annotation Term="Core.Description" String="Defines the threshold for a fuzzy search." />
+        <Annotation Term="Core.LongDescription" String="Default value is 1. This means that an exact search is performed." />
+      </Term>
+      <Term Name="termMappingDictionary" Type="Edm.String" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines the name of the term mapping table." />
+        <Annotation Term="Core.LongDescription" String="Defines the name of the term mapping table (format: schemaname.tablename). passed to the search option 'termMappingTable' of the CONTAINS() predicate." />
+      </Term>
+      <Term Name="termMappingListID" Type="Collection(Edm.String)" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines the names of the term mapping list IDs." />
+        <Annotation Term="Core.LongDescription" String="Defines the names of the term mapping list IDs, passed to the search option 'termMappingListId' of the CONTAINS() predicate." />
+      </Term>
+      <Term Name="fulltextIndex" Type="Edm.Boolean" Nullable="false">
+        <Annotation Term="Core.Description" String="If set to true, a configuration fails if there is no full-text index defined for the element." />
+      </Term>
+      </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
