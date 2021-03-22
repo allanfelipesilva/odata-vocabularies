@@ -17,7 +17,7 @@
                 }
             ]
         },
-        "https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml": {
+        "https://sap.github.io/odata-vocabularies/vocabularies/Communication.json": {
             "$Include": [
                 {
                     "$Namespace": "com.sap.vocabularies.Communication.v1",
@@ -25,7 +25,7 @@
                 }
             ]
         },
-        "https://sap.github.io/odata-vocabularies/vocabularies/Common.xml": {
+        "https://sap.github.io/odata-vocabularies/vocabularies/Common.json": {
             "$Include": [
                 {
                     "$Namespace": "com.sap.vocabularies.Common.v1",
@@ -33,7 +33,7 @@
                 }
             ]
         },
-        "https://sap.github.io/odata-vocabularies/vocabularies/HTML5.xml": {
+        "https://sap.github.io/odata-vocabularies/vocabularies/HTML5.json": {
             "$Include": [
                 {
                     "$Namespace": "com.sap.vocabularies.HTML5.v1",
@@ -1729,7 +1729,6 @@
             "NavigationAvailable": {
                 "$Type": "Edm.Boolean",
                 "$DefaultValue": true,
-                "@Common.Experimental": true,
                 "@Core.Description": "The navigation intent is for that user with the selected context and parameters available"
             },
             "RequiresContext": {
