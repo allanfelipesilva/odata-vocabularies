@@ -1,0 +1,218 @@
+{
+    "$Version": "4.0",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Core.V1",
+                    "$Alias": "Core"
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Validation.V1",
+                    "$Alias": "Validation"
+                }
+            ]
+        },
+        "https://sap.github.io/odata-vocabularies/vocabularies/Common.xml": {
+            "$Include": [
+                {
+                    "$Namespace": "com.sap.vocabularies.Common.v1",
+                    "$Alias": "Common"
+                }
+            ]
+        }
+    },
+    "com.sap.vocabularies.EnterpriseSearch.v1": {
+        "$Alias": "EnterpriseSearch",
+        "@Core.Description": "Terms for Enterprise Search",
+        "@Core.Description#Published": "2018-01-31 © Copyright 2018 SAP SE. All rights reserved",
+        "@Core.Links": [
+            {
+                "rel": "alternate",
+                "href": "https://sap.github.io/odata-vocabularies/vocabularies/EnterpriseSearch.xml"
+            },
+            {
+                "rel": "latest-version",
+                "href": "https://sap.github.io/odata-vocabularies/vocabularies/EnterpriseSearch.json"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://github.com/sap/odata-vocabularies/blob/master/vocabularies/EnterpriseSearch.md"
+            }
+        ],
+        "enabled": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@EnterpriseSearch.searchable": true,
+            "@Core.Description": "Has to be true. The view has to be defined as @Search.searchable and needs a valid anchor key definition."
+        },
+        "hidden": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@EnterpriseSearch.hidden": false,
+            "@Core.Description": "If set to true, the view is not part of the default search scope of a federated search that is used if no SCOPE parameter is given in a search call. In other words, the view is not searched if the view name is not explicitly given in the SCOPE parameter.        If this annotation is not given, the default value is 'false' and the view is part of the default search scope."
+        },
+        "key": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@EnterpriseSearch.key": false,
+            "@Core.Description": "Defines a column that is part of the anchor key",
+            "@Core.LongDescription": "All anchor key columns have to be part of the same database table and this has to be the first (i.e., the leftmost) table that is used in the view definition. The anchor key columns have to define a unique key of the anchor table. Usually the anchor key columns are identical to the primary key columns of the anchor table. In this case, a client column, annotated with @EnterpriseSearch.client set to true, can be omitted from the anchor key definition."
+        },
+        "searchOptions": {
+            "$Kind": "Term",
+            "@Core.Description": "Defines the search options string that is passed to the CONTAINS() predicate when searching in the column."
+        },
+        "defaultValueSuggestElement": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@Core.Description": "Defines a column that is used to calculate suggestions"
+        },
+        "fieldGroupForSearchQuery": {
+            "$Kind": "Term",
+            "$Collection": true,
+            "$Type": "EnterpriseSearch.FieldGroupForSearchQueryType",
+            "@Core.Description": "Defines the ranking weight for a column"
+        },
+        "FieldGroupForSearchQueryType": {
+            "$Kind": "ComplexType",
+            "name": {
+                "@Core.Description": "Defines the name of a field group. The name is used in the query language as a reference to the field group."
+            },
+            "elements": {
+                "$Collection": true,
+                "@Core.Description": "Contains a list of column names. This defines the view columns that belong to the field group."
+            }
+        },
+        "filteringFacet": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearch.FilteringFacetType",
+            "@Core.Description": "Defines a filtering facet"
+        },
+        "FilteringFacetType": {
+            "$Kind": "ComplexType",
+            "default": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "Defines a column as a facet column",
+                "@Core.LongDescription": "If set to true, a facet is automatically returned for this column in the search response if facets are enabled (with custom query option facets=all, for example).\n          If set to false, a facet for this column is returned only if the facet is requested explicitly (by adding the column name to custom query option facets as, for example, facets=AMOUNT,INSTITUTIONCOUNTRY).\n          If the annotation @EnterpriseSearch.filteringFacet.default is not given but any of the other filteringFacet annotations is used for a column, this implicitly also sets @EnterpriseSearch.filteringFacet.default to false.\n          Beginning with Enterprise Search version 5, columns of CDS type hana.ST_POINT can also be defined as facet columns."
+            },
+            "displayPosition": {
+                "$Type": "Edm.Int16",
+                "@Core.Description": "Defines the sequence of facet columns in the search response.",
+                "@Core.LongDescription": "If the number of facets returned in the search response is limited to n (by setting the facets option to n, as, for example, facets=3), only the first n facets in the order defined by the display position are returned.\n          The use of this annotation is optional. But as soon as it is used in a view defini-tion, it has to be given for all facet columns.\n          All facet columns of a leveled hierarchy have to be assigned to the same display position. For all other facet columns the display position has to be unique.\n          If the displayPosition annotation is not used, facet columns are returned in a stable order so that consecutive calls to sys.esh_search() return the same sequence of facet columns."
+            },
+            "numberOfValues": {
+                "$Type": "Edm.Int16",
+                "@Core.Description": "Defines the number of values that are returned in the facet. If this parameter is not given, 10 values are returned by default."
+            },
+            "order": {
+                "$Type": "EnterpriseSearch.OrderType",
+                "@Core.Description": "Defines the sorting for facet columns."
+            },
+            "caseInsensitiveAggregation": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "If set to true, a case-insensitive aggregation of facet values is done. If not given or set to false, the default aggregation is case-sensitive."
+            },
+            "countNullValues": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "If set to true, facets also return an anchor object count for NULL values. If not given or set to false, NULL values are not returned.NULL values are returned only for facets that show single values. If intervals are returned (for date, numeric or spatial SQL types), NULL values are not part of the facet."
+            },
+            "noIntervals": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "If set to true, date facets and numeric facets are returned as single values instead of intervals.If set to false, date facets and numeric facets are returned as intervals. This is the default behavior."
+            }
+        },
+        "OrderType": {
+            "$Kind": "ComplexType",
+            "by": {
+                "$Type": "EnterpriseSearch.byType",
+                "@Core.Description": "Defines the sort criterion for facet columns.",
+                "@Core.LongDescription": "The annotation cannot be used for spatial datatypes (hana.ST_POINT, hana.ST_GEOMETRY), as these cannot be sorted."
+            },
+            "byReference": {
+                "@Core.Description": "Defines the name of a column that is used as a sort criterion for a facet column.",
+                "@Core.LongDescription": "The facet is sorted by the contents of the column that is referenced by this annotation.\n          For example, a facet that counts documents for month names can be sorted by the month number so that the UI displays the month names in the right sequence. In this case, the month name is defined as a facet column and this annotation references the view column that contains the number of the month.\n          The referenced column cannot be defined as a language-dependent column."
+            },
+            "direction": {
+                "$Type": "EnterpriseSearch.directionType",
+                "@Core.Description": "Defines whether the facet is sorted in an ascending or descending order.",
+                "@Core.LongDescription": "The default is in a descending order for a facet that is sorted by NUMBER_OF_HITS.\n          In all other cases, the default is to sort in an ascending order."
+            }
+        },
+        "directionType": {
+            "$Kind": "EnumType",
+            "$UnderlyingType": "Edm.String",
+            "ASC": 0,
+            "DESC": 1
+        },
+        "byType": {
+            "$Kind": "EnumType",
+            "$UnderlyingType": "Edm.String",
+            "NUMBER_OF_HITS": 0,
+            "NUMBER_OF_HITS@Core.Description": "If set to NUMBER_OF_HITS, the facet is sorted by the number of distinct anchor objects belonging to each facet value. This is the default behavior.",
+            "FILTER_ELEMENT_VALUE": 1,
+            "FILTER_ELEMENT_VALUE@Core.Description": "If set to FILTER_ELEMENT_VALUE, the facet is sorted by the value of the facet column."
+        },
+        "filteringAttribute": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearch.FilteringAttributeType",
+            "@Core.Description": "Defines a filtering attribute"
+        },
+        "FilteringAttributeType": {
+            "$Kind": "ComplexType",
+            "default": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "filteringAttribute annotations can be used by search UIs to identify elements that are suitable for filter conditions but that shall usually not be displayed as facets.",
+                "@Core.LongDescription": "If needed by the UI, elements with filteringAttribute annotations can be explicitly requested as facets. To get the facet values, the element name has to be explicitly added to the facets option of the search call.\n          If facets are requested with facets=all or facets=n (with n > 0), columns with filteringAttribute annotations are never returned."
+            },
+            "displayPosition": {
+                "$Type": "Edm.Int16",
+                "@Core.Description": "Defines the sequence of facet columns in the search response.",
+                "@Core.LongDescription": "Only if the element is explicitly requested as a facet column.\n          See @EnterpriseSearch.filteringFacet.displayPosition for details."
+            },
+            "caseInsensitiveAggregation": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "If set to true, a case-insensitive aggregation of facet values is done. If not given or set to false, the default aggregation is case-sensitive. Only if the element is explicitly requested as a facet column."
+            },
+            "countNullValues": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "Defines a column that is used to calculate suggestions, if set to true."
+            }
+        },
+        "snippets": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearch.SnippetsType",
+            "@Core.Description": "Defines snippets"
+        },
+        "SnippetsType": {
+            "$Kind": "ComplexType",
+            "enabled": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "Enables snippet calculation for a column.",
+                "@Core.LongDescription": "Only snippets for columns with a presentation mode other than 'NONE' will be returned in the search result. The original column content is not returned if snippets are enabled. In other words, either a snippet or a column value are returned in the search result.\n          The column has to support text search. This means it needs a fulltext index or has to be of SQL type TEXT, BINTEXT or SHORTTEXT.Note\n          This annotation must not be used for columns that are part of a 1:n join.\n          Beginning with API version 4, this annotation is also allowed for columns that are part of a 1:n join if these columns are defined as multi-values or subobjects.\n          For sys.esh_search() calls up to API version 20302 (/v20303/$all?...), snippets are always returned for all columns that have a snippets annotation, independent of presentation mode annotations. If a column has a presentation mode annotation, both the original column value and the snippet are returned in the search response."
+            },
+            "maximumLength ": {
+                "$Type": "Edm.Int16",
+                "@Core.Description": "Defines the maximum length of a snippet in characters.",
+                "@Core.LongDescription": "For columns with annotation @EnterpriseSearch.snippets.enabled set to true this annotation defines the maximum length of a snippet that is returned in the search response.\n          The annotation also defines the maximum length of a snippet that is returned as part of the whyfound information. If the whyfound information contains a highlighted text, the maximum length parameter is ignored.\n          The snippet returned will be as long as possible but it will never be longer than the given maximum length.\n          Without this annotation a snippet has a maximum length of 5000 characters but the length of the snippet depends on the number of different tokens that are found in the column."
+            }
+        },
+        "highlighted": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearch.HighlightedType",
+            "@Core.Description": "Defines highlithing behavior"
+        },
+        "HighlightedType": {
+            "$Kind": "ComplexType",
+            "enabled": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "Enables highlighting for a column.",
+                "@Core.LongDescription": "Only highlighting for columns with a presentation mode other than 'NONE' will be returned in the search result. The original column content is not returned if highlighting is enabled. In other words, either a highlighted text or a column value are returned in the search results.\n          It is possible to get both snippets and highlighted text in the search result by setting both annotations.\n          The column has to support text search. This means it needs a fulltext index or has to be of SQL type TEXT, BINTEXT or SHORTTEXT.\n          Beginning with API version 4, this annotation is also allowed for columns that are part of a 1:n join if these columns are defined as multi-values or subobjects.\n          For sys.esh_search() calls up to API version 20302 (/v20303/$all?...), highlighted text is always returned for all columns that have a highlighted annotation, independent of presentation mode annotations. If a column has a presentation mode annotation, both the original column value and the highlighted text are returned in the search response."
+            }
+        }
+    }
+}

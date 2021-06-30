@@ -1,0 +1,226 @@
+{
+    "$Version": "4.0",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Core.V1",
+                    "$Alias": "Core"
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Validation.V1",
+                    "$Alias": "Validation"
+                }
+            ]
+        },
+        "https://sap.github.io/odata-vocabularies/vocabularies/Common.xml": {
+            "$Include": [
+                {
+                    "$Namespace": "com.sap.vocabularies.Common.v1",
+                    "$Alias": "Common"
+                }
+            ]
+        }
+    },
+    "com.sap.vocabularies.EnterpriseSearchHana.v1": {
+        "$Alias": "EnterpriseSearchHana",
+        "@Core.Description": "Terms for Enterprise Search Hana",
+        "@Core.Description#Published": "2018-01-31 © Copyright 2018 SAP SE. All rights reserved",
+        "@Core.Links": [
+            {
+                "rel": "alternate",
+                "href": "https://sap.github.io/odata-vocabularies/vocabularies/EnterpriseSearchHana.xml"
+            },
+            {
+                "rel": "latest-version",
+                "href": "https://sap.github.io/odata-vocabularies/vocabularies/EnterpriseSearchHana.json"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://github.com/sap/odata-vocabularies/blob/master/vocabularies/EnterpriseSearchHana.md"
+            }
+        ],
+        "arbitraryCardinality": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@EnterpriseSearchHana.arbitraryCardinality": true,
+            "@Core.Description": "Defines a column as a multi-value column.",
+            "@Core.LongDescription": "This means that the column comes from an 1:n join and that it is returned in the search result as an array. This annotation is only allowed for columns that are of a SQL type that can be used in a group by clause."
+        },
+        "weight": {
+            "$Kind": "Term",
+            "$Type": "Edm.Decimal",
+            "@Core.Description": "Defines the ranking weight of a column that is used to calculate the overall score.",
+            "@Core.LongDescription": "Only one of the annotations @EnterpriseSearchHana.weight and @Search.ranking can be used for a column."
+        },
+        "identifier": {
+            "$Kind": "Term",
+            "@Core.Description": "Defines the OData identifier of a column. The value has to be a valid OData identifier.",
+            "@Core.LongDescription": "If an identifier is defined, the identifier is used instead of the original column name in all interfaces of esh_search() including the metadata call. In other words, the internal column name is not visible to the users of esh_search(). If this annotation is not given, the column name is used as an identifier."
+        },
+        "numc": {
+            "$Kind": "Term",
+            "$Type": "Edm.Boolean",
+            "@Core.Description": "Defines a column as an ABAP NUMC column (a numeric value padded with leading zeros).",
+            "@Core.LongDescription": "Without score functions, a search in a NUMC column is done similar to an alphanum search limited to numeric characters.Interval facets are returned, if a facet is requested for a NUMC column."
+        },
+        "layoutStructuredObject": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearchHana.LayoutStructuredObjectType",
+            "@Core.Description": "Defines a subobject of the anchor object",
+            "@Core.LongDescription": "This means that the columns of the subobject come from a 1:n join and are returned in the search result as an array."
+        },
+        "LayoutStructuredObjectType": {
+            "$Kind": "ComplexType",
+            "arbitraryCardinality": {
+                "$Type": "Edm.Boolean",
+                "@EnterpriseSearchHana.arbitraryCardinality": true,
+                "@Core.Description": "defines that the subobject comes from a 1:n join and that there may be multiple subobject instances for a given anchor object."
+            },
+            "layerId": {
+                "@Core.Description": "Defines the name of the subobject."
+            },
+            "childIds": {
+                "$Collection": true,
+                "@Core.Description": "Defines the names of other subobjects that are included within the subobject."
+            },
+            "defaultExpand": {
+                "$Type": "EnterpriseSearchHana.DefaultExpandType",
+                "@Core.Description": "defines which subobjects are returned in the search result."
+            },
+            "elementList": {
+                "$Collection": true,
+                "$Type": "EnterpriseSearchHana.ElementListType",
+                "@Core.Description": "Defines the view columns that belong to the subobject."
+            }
+        },
+        "DefaultExpandType": {
+            "$Kind": "EnumType",
+            "$UnderlyingType": "Edm.String",
+            "WHY_FOUND": 0,
+            "WHY_FOUND@Core.Description": "Only the subobject of the anchor object are returned that contain at least one of the search terms.",
+            "ALL": 1,
+            "ALL@Core.Description": "All subobjects of an anchor object are returned."
+        },
+        "ElementListType": {
+            "$Kind": "ComplexType",
+            "element": {
+                "@Core.Description": "Contains the name of a view column that belongs to the subobject."
+            },
+            "key": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "Defines if a column is part of the subobject's key. Used to identify the distinct subobjects of an anchor object.",
+                "@Core.LongDescription": "If there are no key columns defined for a subobject, all columns are used to identify the distinct subobjects."
+            }
+        },
+        "uiResource": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearchHana.UiResourceType"
+        },
+        "UiResourceType": {
+            "$Kind": "ComplexType",
+            "label": {
+                "$Type": "EnterpriseSearchHana.UiResourceLabelType"
+            }
+        },
+        "UiResourceLabelType": {
+            "$Kind": "ComplexType",
+            "bundle": {
+                "$Type": "Edm.Boolean",
+                "@Core.Description": "Defines the name of a resource bundle. Can be used by the search ui to load a view label."
+            },
+            "key": {
+                "@Core.Description": "defines the name of a key in a resource bundle. Can be used by the search ui to load a view label."
+            }
+        },
+        "translation": {
+            "$Kind": "Term",
+            "$Collection": true,
+            "$Type": "EnterpriseSearchHana.TranslationType",
+            "@Core.Description": "Defines multilingual UI text directly in the search configuration as an alternative to resource bundles. The texts are returned in the output of a metadata call."
+        },
+        "TranslationType": {
+            "$Kind": "ComplexType",
+            "id": {},
+            "@Core.Description": "Placeholder that is later used in the search configuration to reference the translated texts.",
+            "value": {
+                "$Collection": true,
+                "$Type": "EnterpriseSearchHana.TranslationValueType"
+            }
+        },
+        "TranslationValueType": {
+            "$Kind": "ComplexType",
+            "language": {
+                "@Core.Description": "Language code with location, IE: en_GB, en_US, en_AU, de_DE, de_AT."
+            },
+            "text": {}
+        },
+        "navigation": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearchHana.NavigationType"
+        },
+        "NavigationType": {
+            "$Kind": "ComplexType",
+            "panel": {
+                "$Collection": true,
+                "$Type": "EnterpriseSearchHana.NavigationPanelType"
+            },
+            "attachByPosition": {
+                "$Collection": true,
+                "$Type": "EnterpriseSearchHana.TranslationAttachByPositionType"
+            },
+            "attachToTitle": {
+                "$Type": "EnterpriseSearchHana.TranslationAttachToTitleType"
+            }
+        },
+        "NavigationPanelType": {
+            "$Kind": "ComplexType",
+            "urlElement": {},
+            "displayPosition": {
+                "$Type": "Edm.Int32"
+            },
+            "label": {}
+        },
+        "TranslationAttachByPositionType": {
+            "$Kind": "ComplexType",
+            "urlElement": {},
+            "responseFieldPosition": {
+                "$Type": "Edm.Int32"
+            }
+        },
+        "TranslationAttachToTitleType": {
+            "$Kind": "ComplexType",
+            "urlElement": {}
+        },
+        "boosting": {
+            "$Kind": "Term",
+            "$Type": "EnterpriseSearchHana.BoostingType"
+        },
+        "BoostingType": {
+            "$Kind": "ComplexType",
+            "definitions": {
+                "$Collection": true,
+                "$Type": "EnterpriseSearchHana.BoostingDefinitionsType"
+            },
+            "templates": {
+                "$Collection": true,
+                "$Type": "EnterpriseSearchHana.BoostingTemplatesType"
+            }
+        },
+        "BoostingDefinitionsType": {
+            "$Kind": "ComplexType",
+            "id": {},
+            "precondition": {},
+            "definition": {}
+        },
+        "BoostingTemplatesType": {
+            "$Kind": "ComplexType",
+            "id": {},
+            "template": {}
+        }
+    }
+}

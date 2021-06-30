@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1" />
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+    <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1" />
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sap.vocabularies.EnterpriseSearchHana.v1" Alias="EnterpriseSearchHana">
+      <Annotation Term="Core.Description">
+        <String>Terms for Enterprise Search Hana</String>
+      </Annotation>
+      <Annotation Term="Core.Description" Qualifier="Published">
+        <String>2018-01-31 © Copyright 2018 SAP SE. All rights reserved</String>
+      </Annotation>
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="latest-version" />
+            <PropertyValue Property="href" String="https://sap.github.io/odata-vocabularies/vocabularies/EnterpriseSearchHana.xml" />
+          </Record>
+          <Record>
+            <PropertyValue Property="rel" String="alternate" />
+            <PropertyValue Property="href" String="https://sap.github.io/odata-vocabularies/vocabularies/EnterpriseSearchHana.json" />
+          </Record>
+          <Record>
+            <PropertyValue Property="rel" String="describedby" />
+            <PropertyValue Property="href" String="https://github.com/sap/odata-vocabularies/blob/master/vocabularies/EnterpriseSearchHana.md" />
+          </Record>
+        </Collection>
+      </Annotation>
+      <Term Name="arbitraryCardinality" Type="Edm.Boolean" Nullable="false">
+        <Annotation Term="EnterpriseSearchHana.arbitraryCardinality" Bool="true" />
+        <Annotation Term="Core.Description" String="Defines a column as a multi-value column." />
+        <Annotation Term="Core.LongDescription" String="This means that the column comes from an 1:n join and that it is returned in the search result as an array. This annotation is only allowed for columns that are of a SQL type that can be used in a group by clause." />
+      </Term>
+      <Term Name="weight" Type="Edm.Decimal" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines the ranking weight of a column that is used to calculate the overall score." />
+        <Annotation Term="Core.LongDescription" String="Only one of the annotations @EnterpriseSearchHana.weight and @Search.ranking can be used for a column." />
+      </Term>
+      <Term Name="identifier" Type="Edm.String" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines the OData identifier of a column. The value has to be a valid OData identifier." />
+        <Annotation Term="Core.LongDescription" String="If an identifier is defined, the identifier is used instead of the original column name in all interfaces of esh_search() including the metadata call. In other words, the internal column name is not visible to the users of esh_search(). If this annotation is not given, the column name is used as an identifier." />
+      </Term>
+      <Term Name="numc" Type="Edm.Boolean" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines a column as an ABAP NUMC column (a numeric value padded with leading zeros)." />
+        <Annotation Term="Core.LongDescription" String="Without score functions, a search in a NUMC column is done similar to an alphanum search limited to numeric characters.Interval facets are returned, if a facet is requested for a NUMC column." />
+      </Term>
+
+      <Term Name="layoutStructuredObject" Type="EnterpriseSearchHana.LayoutStructuredObjectType" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines a subobject of the anchor object" />
+        <Annotation Term="Core.LongDescription" String="This means that the columns of the subobject come from a 1:n join and are returned in the search result as an array." />
+      </Term>
+      <ComplexType Name="LayoutStructuredObjectType">
+        <Property Name="arbitraryCardinality" Type="Edm.Boolean" Nullable="false">
+          <Annotation Term="EnterpriseSearchHana.arbitraryCardinality" Bool="true" />
+          <Annotation Term="Core.Description" String="defines that the subobject comes from a 1:n join and that there may be multiple subobject instances for a given anchor object." />
+        </Property>
+        <Property Name="layerId" Type="Edm.String" Nullable="false">
+          <Annotation Term="Core.Description" String="Defines the name of the subobject." />
+        </Property>
+        <Property Name="childIds" Type="Collection(Edm.String)" Nullable="false">
+          <Annotation Term="Core.Description" String="Defines the names of other subobjects that are included within the subobject." />
+        </Property>
+        <Property Name="defaultExpand" Type="EnterpriseSearchHana.DefaultExpandType" Nullable="false">
+          <Annotation Term="Core.Description" String="defines which subobjects are returned in the search result." />
+        </Property>
+        <Property Name="elementList" Type="Collection(EnterpriseSearchHana.ElementListType)" Nullable="false">
+          <Annotation Term="Core.Description" String="Defines the view columns that belong to the subobject." />
+        </Property>
+      </ComplexType>
+      <EnumType Name="DefaultExpandType" UnderlyingType="Edm.String">
+        <Member Name="WHY_FOUND" Value="WHY_FOUND">
+          <Annotation Term="Core.Description" String="Only the subobject of the anchor object are returned that contain at least one of the search terms." />
+        </Member>
+        <Member Name="ALL" Value="ALL">
+          <Annotation Term="Core.Description" String="All subobjects of an anchor object are returned." />
+        </Member>
+      </EnumType>
+      <ComplexType Name="ElementListType">
+        <Property Name="element" Type="Edm.String" Nullable="false">
+          <Annotation Term="Core.Description" String="Contains the name of a view column that belongs to the subobject." />
+        </Property>
+        <Property Name="key" Type="Edm.Boolean" Nullable="false">
+          <Annotation Term="Core.Description" String="Defines if a column is part of the subobject's key. Used to identify the distinct subobjects of an anchor object." />
+          <Annotation Term="Core.LongDescription" String="If there are no key columns defined for a subobject, all columns are used to identify the distinct subobjects." />
+        </Property>
+      </ComplexType>
+
+      <Term Name="uiResource" Type="EnterpriseSearchHana.UiResourceType" Nullable="false"/>
+      <ComplexType Name="UiResourceType">
+        <Property Name="label" Type="EnterpriseSearchHana.UiResourceLabelType" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="UiResourceLabelType">
+        <Property Name="bundle" Type="Edm.Boolean" Nullable="false">
+          <Annotation Term="Core.Description" String="Defines the name of a resource bundle. Can be used by the search ui to load a view label." />
+        </Property>
+        <Property Name="key" Type="Edm.String" Nullable="false">
+          <Annotation Term="Core.Description" String="defines the name of a key in a resource bundle. Can be used by the search ui to load a view label." />
+        </Property> 
+      </ComplexType>
+
+      <Term Name="translation" Type="Collection(EnterpriseSearchHana.TranslationType)" Nullable="false">
+        <Annotation Term="Core.Description" String="Defines multilingual UI text directly in the search configuration as an alternative to resource bundles. The texts are returned in the output of a metadata call." />
+      </Term>
+      <ComplexType Name="TranslationType">
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Annotation Term="Core.Description" String="Placeholder that is later used in the search configuration to reference the translated texts." />
+        <Property Name="value" Type="Collection(EnterpriseSearchHana.TranslationValueType)" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="TranslationValueType">
+        <Property Name="language" Type="Edm.String" Nullable="false">
+          <Annotation Term="Core.Description" String="Language code with location, IE: en_GB, en_US, en_AU, de_DE, de_AT." />
+        </Property>
+        <Property Name="text" Type="Edm.String" Nullable="false"/>
+      </ComplexType>
+
+      <Term Name="navigation" Type="EnterpriseSearchHana.NavigationType" Nullable="false"/>
+      <ComplexType Name="NavigationType">
+        <Property Name="panel" Type="Collection(EnterpriseSearchHana.NavigationPanelType)" Nullable="false"/>
+        <Property Name="attachByPosition" Type="Collection(EnterpriseSearchHana.TranslationAttachByPositionType)" Nullable="false"/>
+        <Property Name="attachToTitle" Type="EnterpriseSearchHana.TranslationAttachToTitleType" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="NavigationPanelType">
+        <Property Name="urlElement" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayPosition" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="label" Type="Edm.String" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="TranslationAttachByPositionType">
+        <Property Name="urlElement" Type="Edm.String" Nullable="false"/>
+        <Property Name="responseFieldPosition" Type="Edm.Int32" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="TranslationAttachToTitleType">
+        <Property Name="urlElement" Type="Edm.String" Nullable="false"/>
+      </ComplexType>
+
+      <Term Name="boosting" Type="EnterpriseSearchHana.BoostingType" Nullable="false"/>
+      <ComplexType Name="BoostingType">
+        <Property Name="definitions" Type="Collection(EnterpriseSearchHana.BoostingDefinitionsType)" Nullable="false"/>
+        <Property Name="templates" Type="Collection(EnterpriseSearchHana.BoostingTemplatesType)" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="BoostingDefinitionsType">
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="precondition" Type="Edm.String" Nullable="false"/>
+        <Property Name="definition" Type="Edm.String" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="BoostingTemplatesType">
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="template" Type="Edm.String" Nullable="false"/>
+      </ComplexType>
+
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
