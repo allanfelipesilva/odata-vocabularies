@@ -8,8 +8,8 @@ Terms for Search
 
 Term|Type|Description
 :---|:---|:----------
-[searchable](Search.xml#L36)|Boolean|<a name="searchable"></a>Defines if a CDS view or entity is generally relevant for search scenarios.<p>The annotation offers a general switch and a means to quickly detect whether a view is relevant or not. Set to true to enable @Search annotations. At least one column has to be defined as defaultSearchElement.</p>
-[defaultSearchElement](Search.xml#L41)|Boolean|<a name="defaultSearchElement"></a>Defines a column as full-text search column.<p>At least one column has to be defined as default full-text search column. Search in views without default full-text search elements is not supported.</p>
+[searchable](Search.xml#L36)|Boolean|<a name="searchable"></a>Defines if a CDS view or entity is generally relevant for search scenarios.<br>The annotation offers a general switch and a means to quickly detect whether a view is relevant or not. Set to true to enable @Search annotations. At least one column has to be defined as defaultSearchElement.
+[defaultSearchElement](Search.xml#L41)|Boolean|<a name="defaultSearchElement"></a>Defines a column as full-text search column.<br>At least one column has to be defined as default full-text search column. Search in views without default full-text search elements is not supported.
 [ranking](Search.xml#L46)|[RankingEnumType](#RankingEnumType)|<a name="ranking"></a>Defines the ranking weight for a column
 [fuzinessThreshold](Search.xml#L60)|Decimal|<a name="fuzinessThreshold"></a>Defines the threshold for a fuzzy search.<p>Default value is 1. This means that an exact search is performed.</p>
 [termMappingDictionary](Search.xml#L65)|String|<a name="termMappingDictionary"></a>Defines the name of the term mapping table.<p>Defines the name of the term mapping table (format: schemaname.tablename). passed to the search option 'termMappingTable' of the CONTAINS() predicate.</p>
