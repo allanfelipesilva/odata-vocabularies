@@ -8,11 +8,11 @@ Terms for Enterprise Search Hana
 
 Term|Type|Description
 :---|:---|:----------
-[arbitraryCardinality](EnterpriseSearchHana.xml#L36)|Boolean|<a name="arbitraryCardinality"></a>Defines a column as a multi-value column.<p>This means that the column comes from an 1:n join and that it is returned in the search result as an array. This annotation is only allowed for columns that are of a SQL type that can be used in a group by clause.</p>
-[weight](EnterpriseSearchHana.xml#L41)|Decimal|<a name="weight"></a>Defines the ranking weight of a column that is used to calculate the overall score.<p>Only one of the annotations @EnterpriseSearchHana.weight and @Search.ranking can be used for a column.</p>
-[identifier](EnterpriseSearchHana.xml#L45)|String|<a name="identifier"></a>Defines the OData identifier of a column. The value has to be a valid OData identifier.<p>If an identifier is defined, the identifier is used instead of the original column name in all interfaces of esh_search() including the metadata call. In other words, the internal column name is not visible to the users of esh_search(). If this annotation is not given, the column name is used as an identifier.</p>
-[numc](EnterpriseSearchHana.xml#L49)|Boolean|<a name="numc"></a>Defines a column as an ABAP NUMC column (a numeric value padded with leading zeros).<p>Without score functions, a search in a NUMC column is done similar to an alphanum search limited to numeric characters.Interval facets are returned, if a facet is requested for a NUMC column.</p>
-[layoutStructuredObject](EnterpriseSearchHana.xml#L54)|[LayoutStructuredObjectType](#LayoutStructuredObjectType)|<a name="layoutStructuredObject"></a>Defines a subobject of the anchor object<p>This means that the columns of the subobject come from a 1:n join and are returned in the search result as an array.</p>
+[arbitraryCardinality](EnterpriseSearchHana.xml#L36)|Boolean|<a name="arbitraryCardinality"></a>Defines a column as a multi-value column.<br>This means that the column comes from an 1:n join and that it is returned in the search result as an array. This annotation is only allowed for columns that are of a SQL type that can be used in a group by clause.
+[weight](EnterpriseSearchHana.xml#L41)|Decimal|<a name="weight"></a>Defines the ranking weight of a column that is used to calculate the overall score.<br>Only one of the annotations @EnterpriseSearchHana.weight and @Search.ranking can be used for a column.
+[identifier](EnterpriseSearchHana.xml#L45)|String|<a name="identifier"></a>Defines the OData identifier of a column. The value has to be a valid OData identifier.<br>If an identifier is defined, the identifier is used instead of the original column name in all interfaces of esh_search() including the metadata call. In other words, the internal column name is not visible to the users of esh_search(). If this annotation is not given, the column name is used as an identifier.
+[numc](EnterpriseSearchHana.xml#L49)|Boolean|<a name="numc"></a>Defines a column as an ABAP NUMC column (a numeric value padded with leading zeros).<br>Without score functions, a search in a NUMC column is done similar to an alphanum search limited to numeric characters.Interval facets are returned, if a facet is requested for a NUMC column.
+[layoutStructuredObject](EnterpriseSearchHana.xml#L54)|[LayoutStructuredObjectType](#LayoutStructuredObjectType)|<a name="layoutStructuredObject"></a>Defines a subobject of the anchor object<br>This means that the columns of the subobject come from a 1:n join and are returned in the search result as an array.
 [uiResource](EnterpriseSearchHana.xml#L94)|[UiResourceType](#UiResourceType)|<a name="uiResource"></a>
 [translation](EnterpriseSearchHana.xml#L107)|\[[TranslationType](#TranslationType)\]|<a name="translation"></a>Defines multilingual UI text directly in the search configuration as an alternative to resource bundles. The texts are returned in the output of a metadata call.
 [navigation](EnterpriseSearchHana.xml#L122)|[NavigationType](#NavigationType)|<a name="navigation"></a>
@@ -43,7 +43,7 @@ Member|Value|Description
 Property|Type|Description
 :-------|:---|:----------
 [element](EnterpriseSearchHana.xml#L85)|String|Contains the name of a view column that belongs to the subobject.
-[key](EnterpriseSearchHana.xml#L88)|Boolean|Defines if a column is part of the subobject's key. Used to identify the distinct subobjects of an anchor object.<p>If there are no key columns defined for a subobject, all columns are used to identify the distinct subobjects.</p>
+[key](EnterpriseSearchHana.xml#L88)|Boolean|Defines if a column is part of the subobject's key. Used to identify the distinct subobjects of an anchor object.<br>If there are no key columns defined for a subobject, all columns are used to identify the distinct subobjects.
 
 ## <a name="UiResourceType"></a>[UiResourceType](EnterpriseSearchHana.xml#L95)
 
